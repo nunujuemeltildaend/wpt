@@ -3561,8 +3561,8 @@ globalThis.idl_test = idl_test;
  * fetch_spec is a shorthand for a Promise that fetches the spec's content.
  * Note: ShadowRealm-specific implementation in testharness-shadowrealm-inner.js
  */
-function fetch_spec(spec) {
-    var url = '/interfaces/' + spec + '.idl';
+globalThis.fetch_spec = function fetch_spec(spec) {
+    var url = 'http://web-platform.test:8000/interfaces/' + spec + '.idl';
     return fetch(url).then(function (r) {
         if (!r.ok) {
             throw new IdlHarnessError("Error fetching " + url + ".");

@@ -1,10 +1,5 @@
-<!DOCTYPE html>
-<html>
-<link rel="help" href="https://html.spec.whatwg.org/multipage/webappapis.html#perform-a-microtask-checkpoint">
-<link rel="help" href="https://html.spec.whatwg.org/multipage/timers-and-user-prompts.html#timer-initialisation-steps">
-<script src="/resources/testharness.js"></script>
-<script src="/resources/testharnessreport.js"></script>
-<script>
+// META: help=https://html.spec.whatwg.org/multipage/webappapis.html#perform-a-microtask-checkpoint
+// META: help=https://html.spec.whatwg.org/multipage/timers-and-user-prompts.html#timer-initialisation-steps
 // queue a microtask after the timer has reached the spec-defined maximum nesting level. Then we ensure
 // the new timer did not inherit the nesting level from the outer timer task by checking that the sub-4ms
 // timeout was not clamped to 4ms.
@@ -34,5 +29,3 @@ function rescheduleTimeout()
 }
 
 window.addEventListener("load", () => setTimeout(rescheduleTimeout, 8));
-</script>
-</html>
