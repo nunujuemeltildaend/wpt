@@ -22,6 +22,7 @@
     // Fresh user activation ensures any rejection is due to the pending
     // request, not lack of user activation (both would be NotAllowedError)
     await test_driver.bless("user activation for second request");
+    assert_true(navigator.userActivation.isActive);
     const secondRequest = navigator.credentials.get(secondOptions);
 
     await promise_rejects_dom(
