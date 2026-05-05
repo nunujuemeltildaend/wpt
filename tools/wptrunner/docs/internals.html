@@ -344,6 +344,44 @@ fully custom implementation.</p>
 <dd></dd></dl>
 
 <dl class="py class">
+<dt class="sig sig-object py" id="wptrunner.executors.base.PytestExecutor">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">wptrunner.executors.base.</span></span><span class="sig-name descname"><span class="pre">PytestExecutor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">logger</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">browser</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">server_config</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">webdriver_binary</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">webdriver_args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_platform</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">display</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">headless</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout_multiplier</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">capabilities</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">debug_info</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">binary</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">binary_args</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#wptrunner.executors.base.PytestExecutor" title="Link to this definition">¶</a></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py" id="wptrunner.executors.base.PytestExecutor.do_test">
+<span class="sig-name descname"><span class="pre">do_test</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">test</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#wptrunner.executors.base.PytestExecutor.do_test" title="Link to this definition">¶</a></dt>
+<dd><p>Test-type and protocol specific implementation of running a
+specific test.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>test</strong> – The test to run.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="wptrunner.executors.base.PytestExecutor.protocol_cls">
+<span class="sig-name descname"><span class="pre">protocol_cls</span></span><a class="headerlink" href="#wptrunner.executors.base.PytestExecutor.protocol_cls" title="Link to this definition">¶</a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">PytestProtocol</span></code></p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="wptrunner.executors.base.PytestExecutor.setup">
+<span class="sig-name descname"><span class="pre">setup</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">runner</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">protocol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#wptrunner.executors.base.PytestExecutor.setup" title="Link to this definition">¶</a></dt>
+<dd><p>Run steps needed before tests can be started e.g. connecting to
+browser instance</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>runner</strong> – TestRunner instance that is going to run the tests.</p></li>
+<li><p><strong>protocol</strong> – protocol connection to reuse if not None</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
 <dt class="sig sig-object py" id="wptrunner.executors.base.RefTestExecutor">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">wptrunner.executors.base.</span></span><span class="sig-name descname"><span class="pre">RefTestExecutor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">logger</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">browser</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">server_config</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout_multiplier</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">screenshot_cache</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">debug_info</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reftest_screenshot</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'unexpected'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#wptrunner.executors.base.RefTestExecutor" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -423,44 +461,6 @@ browser instance</p>
 <dt class="sig sig-object py" id="wptrunner.executors.base.TestharnessExecutor">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">wptrunner.executors.base.</span></span><span class="sig-name descname"><span class="pre">TestharnessExecutor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">logger</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">browser</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">server_config</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout_multiplier</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">debug_info</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subsuite</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#wptrunner.executors.base.TestharnessExecutor" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
-
-<dl class="py class">
-<dt class="sig sig-object py" id="wptrunner.executors.base.WdspecExecutor">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">wptrunner.executors.base.</span></span><span class="sig-name descname"><span class="pre">WdspecExecutor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">logger</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">browser</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">server_config</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">webdriver_binary</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">webdriver_args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_platform</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">display</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">headless</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout_multiplier</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">capabilities</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">debug_info</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">binary</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">binary_args</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#wptrunner.executors.base.WdspecExecutor" title="Link to this definition">¶</a></dt>
-<dd><dl class="py method">
-<dt class="sig sig-object py" id="wptrunner.executors.base.WdspecExecutor.do_test">
-<span class="sig-name descname"><span class="pre">do_test</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">test</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#wptrunner.executors.base.WdspecExecutor.do_test" title="Link to this definition">¶</a></dt>
-<dd><p>Test-type and protocol specific implementation of running a
-specific test.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>test</strong> – The test to run.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="wptrunner.executors.base.WdspecExecutor.protocol_cls">
-<span class="sig-name descname"><span class="pre">protocol_cls</span></span><a class="headerlink" href="#wptrunner.executors.base.WdspecExecutor.protocol_cls" title="Link to this definition">¶</a></dt>
-<dd><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">WdspecProtocol</span></code></p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="wptrunner.executors.base.WdspecExecutor.setup">
-<span class="sig-name descname"><span class="pre">setup</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">runner</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">protocol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#wptrunner.executors.base.WdspecExecutor.setup" title="Link to this definition">¶</a></dt>
-<dd><p>Run steps needed before tests can be started e.g. connecting to
-browser instance</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>runner</strong> – TestRunner instance that is going to run the tests.</p></li>
-<li><p><strong>protocol</strong> – protocol connection to reuse if not None</p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
-</dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="wptrunner.executors.base.get_pages">

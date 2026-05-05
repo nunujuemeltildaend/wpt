@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>aamtest tests &#8212; web-platform-tests  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=5ecbeea2" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css?v=12dfc556" />
+    <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="aamtest-tests">
+<h1>aamtest tests<a class="headerlink" href="#aamtest-tests" title="Link to this heading">¶</a></h1>
+<p>The aamtest tests are used to verify the mapping of web content to
+browser-exposed platform-specific accessibility APIs. These mappings are
+specified by working groups of the W3C in the following specifications:</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://w3c.github.io/core-aam">Core-AAM</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://w3c.github.io/html-aam">HTML-AAM</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://w3c.github.io/dpub-aam">DPUB-AAM</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://w3c.github.io/mathml-aam">MathML-AAM</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://w3c.github.io/graphics-aam">Graphics-AAM</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://w3c.github.io/svg-aam/">SVG-AAM</a></li>
+</ul>
+</div>
+<p>These tests are written in <a class="reference external" href="https://www.python.org/">the Python programming
+language</a> and structured with <a class="reference external" href="https://docs.pytest.org/en/latest/">the pytest testing
+framework</a>.</p>
+<p>The aamtest type is built on the <a class="reference internal" href="wdspec.html"><span class="doc">wdspec</span></a> test type, and has access to
+all the Python fixtures defined for wdspec tests. It uses the web-platform-tests
+maintained WebDriver client library to load HTML and to send other WebDriver
+commands to the browser.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">wptrunner</span></code> will know a Python file is an aamtest if it is contained within
+an <code class="docutils literal notranslate"><span class="pre">aamtests</span></code> directory.</p>
+<section id="platform-specific-accessibility-apis">
+<h2>Platform-Specific Accessibility APIs<a class="headerlink" href="#platform-specific-accessibility-apis" title="Link to this heading">¶</a></h2>
+<p>Accessibility APIs are platform (or operating system) specific, each platform
+has their own API (sometimes more than one). Assistive technologies, such as
+screen readers, interact with the browser on behalf of a user via these
+APIs. The AAM specifications explain how to expose web content through these
+APIs. You can read more about <a class="reference external" href="https://w3c.github.io/core-aam/#intro_aapi">the APIs in
+Core-AAM</a>.</p>
+<p>The table below lists:</p>
+<ul class="simple">
+<li><p><strong>API Name</strong>: APIs supported by the aamtest framework</p></li>
+<li><p><strong>Fixture Name</strong>: The name of the pytest fixture that returns access to the API (if you are
+on the correct platform).</p></li>
+<li><p><strong>Platform</strong>: The platform of that API.</p></li>
+<li><p><strong>Python Bindings</strong>: The Python library that provides bindings to query the API.</p></li>
+</ul>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>API Name</p></th>
+<th class="head"><p>Fixture Name</p></th>
+<th class="head"><p>Platform</p></th>
+<th class="head"><p>Python Bindings</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Accessibility Toolkit (<a class="reference external" href="https://developer.gnome.org/atk/stable/">ATK</a>) and Assistive Technology Service Provider Interface (<a class="reference external" href="https://gnome.pages.gitlab.gnome.org/at-spi2-core/libatspi/">AT-SPI</a>)</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">atspi</span></code></p></td>
+<td><p>Linux</p></td>
+<td><p><a class="reference external" href="https://lazka.github.io/pgi-docs/#Atspi-2.0">Provided through PyGObject</a></p></td>
+</tr>
+<tr class="row-odd"><td><p>The NSAccessibility Protocol for macOS (<a class="reference external" href="https://developer.apple.com/documentation/appkit/nsaccessibility">AX API</a>)</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">axapi</span></code></p></td>
+<td><p>macOS</p></td>
+<td><p><a class="reference external" href="https://pypi.org/project/pyobjc-framework-Accessibility/">pyobjc-framework-Accessibility</a></p></td>
+</tr>
+<tr class="row-even"><td><p>MSAA with IAccessible2 1.3 (<a class="reference external" href="https://wiki.linuxfoundation.org/accessibility/iaccessible2/start">IA2</a>)</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">ia2</span></code></p></td>
+<td><p>Windows</p></td>
+<td><p>Loading module <a class="reference external" href="https://github.com/LinuxA11y/IAccessible2">ia2_api_all.idl</a> with <a class="reference external" href="https://pypi.org/project/comtypes/">comtypes</a></p></td>
+</tr>
+</tbody>
+</table>
+<p>The APIs are exposed through a pytest fixture with the name in the table
+above. The pytest fixture returns a wrapped version of the API. Requesting this
+fixture on a platform where it is not supported will result in a <code class="docutils literal notranslate"><span class="pre">MISSING</span></code>
+subtest. It is expected that each test file run on a given platform will have
+one or more subtests that run to completion, as well as several subtests who’s
+results will not be recorded. This is because each test file should show how the
+<strong>same markup</strong> is exposed in each supporting accessibility APIs/platforms.</p>
+<section id="package-dependencies-for-linux-api-at-spi-python-bindings">
+<h3>Package dependencies for Linux API AT-SPI Python Bindings<a class="headerlink" href="#package-dependencies-for-linux-api-at-spi-python-bindings" title="Link to this heading">¶</a></h3>
+<p>In order to test the Linux API AT-SPI, you need to have the following packages
+installed:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">apt</span> <span class="n">install</span> <span class="n">libatspi2</span><span class="mf">.0</span><span class="o">-</span><span class="n">dev</span> <span class="n">libcairo2</span><span class="o">-</span><span class="n">dev</span> <span class="n">libgirepository1</span><span class="mf">.0</span><span class="o">-</span><span class="n">dev</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="adding-new-tests">
+<h2>Adding new tests<a class="headerlink" href="#adding-new-tests" title="Link to this heading">¶</a></h2>
+<p>If you would like to add a new aamtest to a specification that does not yet have
+coverage, add the tests to an <code class="docutils literal notranslate"><span class="pre">aamtests</span></code> subfolder. This subfolder indicates the
+Python files within it will be run as an aamtest. This includes restarting the
+browser with accessibility enabled, if you are doing a full run of the test
+suite.</p>
+<p>In the <code class="docutils literal notranslate"><span class="pre">aamtests</span></code> subfolder, the <code class="docutils literal notranslate"><span class="pre">conftest.py</span></code> will need to add the
+<code class="docutils literal notranslate"><span class="pre">webdriver/test/support</span></code> path and <code class="docutils literal notranslate"><span class="pre">core-aam/aamtests/support</span></code> path to the
+sys.path and add the paths as <code class="docutils literal notranslate"><span class="pre">pytest_plugins</span></code> in order to have access to the
+appropriate fixtures. See <code class="docutils literal notranslate"><span class="pre">core-aam/aamtests/conftest.py</span></code>.</p>
+<section id="test-design">
+<h3>Test design<a class="headerlink" href="#test-design" title="Link to this heading">¶</a></h3>
+<p>Similar to <a class="reference internal" href="testharness.html"><span class="doc">testharness.js</span></a> tests, each file is a test, and a
+function that begins with the name “test_” is a subtest of that test.</p>
+<p>A typical test file contains some html markup and several subtests. Each subtest
+will test how that markup is exposed in a single accessibility API. For example,
+if you are testing how <code class="docutils literal notranslate"><span class="pre">&lt;div</span> <span class="pre">role=foobar&gt;foobar</span> <span class="pre">widget&lt;/div&gt;</span></code> is exposed in
+accessibility APIs, and foobars are supported in the Linux API AT-SPI and macOS
+API AX API, you should add a subtest called <code class="docutils literal notranslate"><span class="pre">test_atspi</span></code> and <code class="docutils literal notranslate"><span class="pre">test_axapi</span></code>,
+respectively. Both subtests will load the same HTML, then query their respective
+accessibility APIs. The subtest name should include, at least, the name of the
+API being tested for ease of understanding the test results.</p>
+<p>For example, the file <code class="docutils literal notranslate"><span class="pre">foobar.py</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">TEST_HTML</span> <span class="o">=</span> <span class="s2">&quot;&lt;div role=foobar id=test&gt;&lt;/div&gt;&quot;</span>
+
+<span class="c1"># Test of the Linux accessibility API: AT-SPI</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_atspi</span><span class="p">(</span><span class="n">atspi</span><span class="p">,</span> <span class="n">session</span><span class="p">,</span> <span class="n">inline</span><span class="p">):</span>
+    <span class="c1"># The `session` and `inline` fixtures are provided from the `wdspec` test infrastructure.</span>
+    <span class="n">session</span><span class="o">.</span><span class="n">url</span> <span class="o">=</span> <span class="n">inline</span><span class="p">(</span><span class="n">TEST_HTML</span><span class="p">)</span>
+
+    <span class="c1"># The `atspi` fixture wraps the AT-SPI Python bindings and provides some helper functions,</span>
+    <span class="c1"># such as `find_node`, which finds a node by DOM ID.</span>
+    <span class="n">node</span> <span class="o">=</span> <span class="n">atspi</span><span class="o">.</span><span class="n">find_node</span><span class="p">(</span><span class="s2">&quot;test&quot;</span><span class="p">,</span> <span class="n">session</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">atspi</span><span class="o">.</span><span class="n">Accessible</span><span class="o">.</span><span class="n">get_role</span><span class="p">(</span><span class="n">node</span><span class="p">)</span> <span class="o">==</span> <span class="n">atspi</span><span class="o">.</span><span class="n">Role</span><span class="o">.</span><span class="n">FOOBAR</span>
+
+<span class="c1"># Test of the macOS accessibility API: AX API</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_axapi</span><span class="p">(</span><span class="n">axapi</span><span class="p">,</span> <span class="n">session</span><span class="p">,</span> <span class="n">inline</span><span class="p">):</span>
+    <span class="c1"># The `session` and `inline` fixtures are provided from the `wdspec` test infrastructure.</span>
+    <span class="n">session</span><span class="o">.</span><span class="n">url</span> <span class="o">=</span> <span class="n">inline</span><span class="p">(</span><span class="n">TEST_HTML</span><span class="p">)</span>
+
+    <span class="c1"># The `axapi` fixture wraps the AX API Python bindings and provides some helper functions,</span>
+    <span class="c1"># such as `find_node`, which finds a node by DOM ID.</span>
+    <span class="n">node</span> <span class="o">=</span> <span class="n">axapi</span><span class="o">.</span><span class="n">find_node</span><span class="p">(</span><span class="s2">&quot;test&quot;</span><span class="p">,</span> <span class="n">session</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+    <span class="n">role</span> <span class="o">=</span> <span class="n">axapi</span><span class="o">.</span><span class="n">AXUIElementCopyAttributeValue</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="s2">&quot;AXRole&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">assert</span> <span class="n">role</span> <span class="o">==</span> <span class="s2">&quot;AXFoobar&quot;</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="adding-support-for-an-unsupported-api">
+<h2>Adding support for an unsupported API<a class="headerlink" href="#adding-support-for-an-unsupported-api" title="Link to this heading">¶</a></h2>
+<p>To add an unsupported API:</p>
+<ol class="simple">
+<li><p>Add the Python package that provides the Python bindings for that API to
+<code class="docutils literal notranslate"><span class="pre">tools/wptrunner/requirements_platform_accessibility.txt</span></code>.</p></li>
+<li><p>Create a wrapper object for the new API in <code class="docutils literal notranslate"><span class="pre">newapi_wrapper.py</span></code> in
+<code class="docutils literal notranslate"><span class="pre">core-aam/aamtests/support/</span></code>. It must inherit from <code class="docutils literal notranslate"><span class="pre">ApiWrapper</span></code> and follow
+the same conventions as the other API wrappers, as appropriate.</p></li>
+<li><p>Add the fixture for that API in
+<code class="docutils literal notranslate"><span class="pre">core-aam/aamtests/support/fixtures_a11y_api.py</span></code>.</p></li>
+<li><p>Update the table in the “Platform-Specific Accessibility APIs” section of this
+document.</p></li>
+<li><p>Add a new subtest to all the files that contain markup you would like to test.</p></li>
+</ol>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">web-platform-tests</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../test-suite-design.html">Test Suite Design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intro-video-transcript.html">“Introduction to WPT” video transcript</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../running-tests/index.html">Running Tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="index.html">Writing Tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reviewing-tests/index.html">Reviewing Tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../admin/index.html">Project Administration</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2019, wpt contributors.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 7.2.6</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 0.7.16</a>
+      
+      |
+      <a href="../_sources/writing-tests/aamtest.md.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
