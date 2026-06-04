@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>navigate too many calls</title>
+<script src="/resources/testharness.js"></script>
+<script src="/resources/testharnessreport.js"></script>
+</head>
+<body>
+<div id="log"></div>
+<script>
+const maxCalls = 500;
+
+async function createIframe(t) {
+  const iframe = document.createElement("iframe");
+  iframe.src = "/common/blank.html";
+  t.add_cleanup(() => iframe.remove());
+
+  const iframeLoaded = new Promise(resolve => {
+    iframe.addEventListener("load", resolve, { once: true });
+  });
+  document.body.append(iframe);
+  await iframeLoaded;
+  return iframe;
+}
+
+function waitForHashchangeOrTimeout(t, win) {
+  return new Promise(resolve => {
+    let settled = false;
+
+    const timeoutId = t.step_timeout(() => {
+      if (settled) {
+        return;
+      }
+      settled = true;
+      resolve(false);
+    }, 500);
+
+    win.addEventListener("hashchange", () => {
+      if (settled) {
+        return;
+      }
+      settled = true;
+      win.clearTimeout(timeoutId);
+      resolve(true);
+    }, { once: true });
+  });
+}
+
+promise_test(async t => {
+  const iframe = await createIframe(t);
+  const iframeWindow = iframe.contentWindow;
+
+  for (let i = 0; i < maxCalls; ++i) {
+    const previousURL = iframeWindow.location.href;
+    const expectedHash = `#fragment-${i}`;
+    const hashchangePromise = waitForHashchangeOrTimeout(t, iframeWindow);
+
+    iframeWindow.location.hash = expectedHash;
+
+    if (!await hashchangePromise) {
+      assert_equals(
+        iframeWindow.location.href,
+        previousURL,
+        "rate-limited fragment navigation must not update the URL"
+      );
+      return;
+    }
+
+    assert_not_equals(
+      iframeWindow.location.href,
+      previousURL,
+      "allowed fragment navigation must update the URL"
+    );
+    assert_true(
+      iframeWindow.location.href.endsWith(expectedHash),
+      "allowed fragment navigation must update to the requested fragment"
+    );
+  }
+
+  assert_unreached("No rate limit reached after 500 fragment navigations.");
+}, "fragment navigations through navigate are ignored after too many calls");
+</script>
+</body>
+</html>
