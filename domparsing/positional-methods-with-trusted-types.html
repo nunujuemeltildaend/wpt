@@ -199,6 +199,56 @@
     assert_equals(target.childNodes[2].tagName, "SPAN");
   }, "prependHTMLUnsafe evaluates Trusted Types before determining the reference child");
 
+  for (const method_name of [
+    "appendHTMLUnsafe",
+    "prependHTMLUnsafe",
+    "beforeHTMLUnsafe",
+    "afterHTMLUnsafe",
+    "replaceWithHTMLUnsafe",
+  ]) {
+    test((t) => {
+      const custom_policy = trustedTypes.createPolicy("custom" + (policy_id++), {
+        createHTML: (html) => html.replace("foo", "bar"),
+      });
+      // Set default policy to throw if called
+      t.add_cleanup(() => {
+        createHTML = (html) => html;
+      });
+      createHTML = (html) => {
+        throw new Error("Default policy should not be called when TrustedHTML is passed directly");
+      };
+
+      const target = document.createElement("div");
+      const child = document.createElement("span");
+      target.appendChild(child);
+
+      const trusted = custom_policy.createHTML("<i>foo</i>");
+
+      if (method_name === "appendHTMLUnsafe") {
+        target.appendHTMLUnsafe(trusted);
+        assert_equals(target.lastChild.tagName, "I");
+        assert_equals(target.lastChild.textContent, "bar");
+      } else if (method_name === "prependHTMLUnsafe") {
+        target.prependHTMLUnsafe(trusted);
+        assert_equals(target.firstChild.tagName, "I");
+        assert_equals(target.firstChild.textContent, "bar");
+      } else if (method_name === "beforeHTMLUnsafe") {
+        child.beforeHTMLUnsafe(trusted);
+        assert_equals(target.firstChild.tagName, "I");
+        assert_equals(target.firstChild.textContent, "bar");
+      } else if (method_name === "afterHTMLUnsafe") {
+        child.afterHTMLUnsafe(trusted);
+        assert_equals(target.lastChild.tagName, "I");
+        assert_equals(target.lastChild.textContent, "bar");
+      } else if (method_name === "replaceWithHTMLUnsafe") {
+        child.replaceWithHTMLUnsafe(trusted);
+        assert_equals(target.firstChild.tagName, "I");
+        assert_equals(target.firstChild.textContent, "bar");
+        assert_equals(target.childNodes.length, 1);
+      }
+    }, `${method_name} accepts TrustedHTML directly without invoking default policy`);
+  }
+
     for (const target of ["Element", "ShadowRoot", "template.content"]) {
       for (const pos of [
         "before",
